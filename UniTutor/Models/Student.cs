@@ -11,7 +11,8 @@ namespace UniTutor.Models
         public string? AvatarUrl { get; set; }
         public DateTime CreatedAt { get; set; }
         public int? Complaints { get; set; }
-
-
+        public string Email { get; set; }
+        public string Phone { get; set; }
+        public string? Status { get; set; }
     }
 }

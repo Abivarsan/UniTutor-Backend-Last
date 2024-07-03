@@ -38,15 +38,19 @@ builder.Services.AddCors(options =>
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Add application services
+// Add repositories
 builder.Services.AddScoped<IAdmin, AdminRepository>();
 builder.Services.AddScoped<ITutor, TutorRepository>();
+builder.Services.AddScoped<IStudent, StudentRepository>();
+builder.Services.AddScoped<IUser, UserRepository>();
 
-builder.Services.AddScoped<TutorRepository>();
-
+// Add controllers and Swagger
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "UniTutor API", Version = "v1" });
+});
 
 var app = builder.Build();
 
@@ -55,7 +59,10 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "UniTutor API V1");
+    });
 }
 
 app.UseHttpsRedirection();

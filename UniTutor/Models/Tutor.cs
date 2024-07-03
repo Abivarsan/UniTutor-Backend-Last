@@ -14,5 +14,8 @@ namespace UniTutor.Models
         public bool Verified { get; set; }
         public int? Complaints { get; set; }
         public string Email { get; set; }
+
+        public string Phone { get; set; }
+
     }
 }

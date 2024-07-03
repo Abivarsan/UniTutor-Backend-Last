@@ -12,5 +12,6 @@ namespace UniTutor.Data
 
         public DbSet<Tutor> Tutors { get; set; }
         // Add DbSet properties for other entities
+        public DbSet<Student> Students { get; set; }
     }
 }
