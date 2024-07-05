@@ -5,7 +5,7 @@
 namespace UniTutor.Migrations
 {
     /// <inheritdoc />
-    public partial class last123 : Migration
+    public partial class timezoneset : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

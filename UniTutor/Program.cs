@@ -42,7 +42,12 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddScoped<IAdmin, AdminRepository>();
 builder.Services.AddScoped<ITutor, TutorRepository>();
 builder.Services.AddScoped<IStudent, StudentRepository>();
-builder.Services.AddScoped<IUser, UserRepository>();
+builder.Services.AddScoped<ILastJoined, LastJoinedRepository>();
+builder.Services.AddScoped<IAnalytics, AnalyticsRepository>();
+builder.Services.AddScoped<ICurrentUsersTotal, CurrentUsersTotalRepository>();
+
+
+
 
 // Add controllers and Swagger
 builder.Services.AddControllers();

@@ -4,14 +4,15 @@ using UniTutor.Interface;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using UniTutor.Models;
 
 namespace UniTutor.Respository
 {
-    public class UserRepository : IUser
+    public class LastJoinedRepository : ILastJoined
     {
         private readonly ApplicationDbContext _context;
 
-        public UserRepository(ApplicationDbContext context)
+        public LastJoinedRepository(ApplicationDbContext context)
         {
             _context = context;
         }
@@ -36,5 +37,17 @@ namespace UniTutor.Respository
                 .Take(count)
                 .ToList();
         }
+
+        public async Task<IEnumerable<Student>> GetStudentsAsync()
+        {
+            return await _context.Students.ToListAsync();
+        }
+
+        public async Task<IEnumerable<Tutor>> GetTutorsAsync()
+        {
+            return await _context.Tutors.Where(t => t.Verified).ToListAsync();
+        }
+
+
     }
 }

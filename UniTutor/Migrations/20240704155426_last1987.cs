@@ -5,7 +5,7 @@
 namespace UniTutor.Migrations
 {
     /// <inheritdoc />
-    public partial class _678 : Migration
+    public partial class last1987 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

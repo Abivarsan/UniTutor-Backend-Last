@@ -9,7 +9,6 @@ namespace UniTutor.Interface
         Task<IEnumerable<Tutor>> GetAllTutorsAsync();
         Task<Tutor> GetTutorByIdAsync(int id);
         Task AddTutorAsync(Tutor tutor);
-        Task UpdateTutorAsync(Tutor tutor);
         Task DeleteTutorAsync(int id);
     }
 }

@@ -22,6 +22,40 @@ namespace UniTutor.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("UniTutor.Models.Comment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CommentText")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("StudentId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("TutorId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StudentId");
+
+                    b.HasIndex("TutorId");
+
+                    b.ToTable("Comments");
+                });
+
             modelBuilder.Entity("UniTutor.Models.Student", b =>
                 {
                     b.Property<int>("Id")
@@ -81,19 +115,15 @@ namespace UniTutor.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Phone")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("Verified")
@@ -102,6 +132,47 @@ namespace UniTutor.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Tutors");
+                });
+
+            modelBuilder.Entity("UniTutor.Models.TutorRequest", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("RequestDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TutorRequests");
+                });
+
+            modelBuilder.Entity("UniTutor.Models.Comment", b =>
+                {
+                    b.HasOne("UniTutor.Models.Student", "Student")
+                        .WithMany("Comments")
+                        .HasForeignKey("StudentId");
+
+                    b.HasOne("UniTutor.Models.Tutor", "Tutor")
+                        .WithMany("Comments")
+                        .HasForeignKey("TutorId");
+
+                    b.Navigation("Student");
+
+                    b.Navigation("Tutor");
+                });
+
+            modelBuilder.Entity("UniTutor.Models.Student", b =>
+                {
+                    b.Navigation("Comments");
+                });
+
+            modelBuilder.Entity("UniTutor.Models.Tutor", b =>
+                {
+                    b.Navigation("Comments");
                 });
 #pragma warning restore 612, 618
         }

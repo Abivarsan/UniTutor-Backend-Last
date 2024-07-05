@@ -32,11 +32,6 @@ namespace UniTutor.Respository
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateStudentAsync(Student student)
-        {
-            _context.Entry(student).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
-        }
 
         public async Task DeleteStudentAsync(int id)
         {
@@ -47,6 +42,8 @@ namespace UniTutor.Respository
                 await _context.SaveChangesAsync();
             }
         }
+
+       
 
 
         // Implement other methods as needed
