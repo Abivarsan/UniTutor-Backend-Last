@@ -4,5 +4,7 @@
     {
         public int Id { get; set; }
         public DateTime RequestDate { get; set; }
+
+         public bool IsVerified { get; set; }
     }
 }

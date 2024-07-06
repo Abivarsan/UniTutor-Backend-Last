@@ -1,5 +1,4 @@
-﻿
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,7 +32,23 @@ namespace UniTutor.Repository
 
         public async Task<List<WeeklyDataDto>> GetWeeklyTutorRequestsAsync()
         {
-            return await GetWeeklyDataAsync(_context.TutorRequests, r => r.RequestDate);
+            var startOfWeek = DateTime.Today.AddDays(-(int)DateTime.Today.DayOfWeek);
+            var endOfWeek = startOfWeek.AddDays(7);
+
+            var unverifiedTutors = await _context.Tutors
+                .Where(t => t.CreatedAt >= startOfWeek && t.CreatedAt < endOfWeek && !t.Verified)
+                .ToListAsync();
+
+            var groupedData = unverifiedTutors
+                .GroupBy(t => t.CreatedAt.DayOfWeek)
+                .Select(g => new WeeklyDataDto
+                {
+                    Day = g.Key.ToString(),
+                    Count = g.Count()
+                })
+                .ToList();
+
+            return groupedData;
         }
 
         public async Task<List<WeeklyDataDto>> GetWeeklyCommentsAsync()
