@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UniTutor.DTO;
@@ -13,10 +14,12 @@ namespace UniTutor.Controllers
     public class StudentController : ControllerBase
     {
         private readonly IStudent _studentRepository;
+        private readonly ILogger<StudentController> _logger;
 
-        public StudentController(IStudent studentRepository)
+        public StudentController(IStudent studentRepository, ILogger<StudentController> logger)
         {
             _studentRepository = studentRepository;
+            _logger = logger;
         }
 
         [HttpGet("GetStudentbyId/{id}")]
@@ -80,7 +83,8 @@ namespace UniTutor.Controllers
                 LastName = studentDto.LastName,
                 AvatarUrl = studentDto.AvatarUrl,
                 Email = studentDto.Email,
-                Phone = studentDto.Phone
+                Phone = studentDto.Phone,
+                CreatedAt = localDateTime
             };
 
             await _studentRepository.AddStudentAsync(student);
